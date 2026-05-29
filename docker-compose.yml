@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tw-stock-portfolio-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      # Persist user data on the host filesystem
+      - ./backend/data:/app/data
+    environment:
+      - PORT=3000
+      - TZ=Asia/Taipei # Sync container timezone with Taiwan to ensure precise closing notification schedules
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: tw-stock-portfolio-frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+    restart: always
