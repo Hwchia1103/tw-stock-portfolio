@@ -122,11 +122,16 @@ docker-compose up --build -d
 只要您的手機與電腦連接同一個家庭/公司 Wi-Fi，就能直接用手機存取本系統！
 
 ### 步驟 1：獲取電腦的區網 IP
-在 Windows 的 `cmd` 或 `PowerShell` 中輸入 `ipconfig`，找到您的 **無線區域網路 (Wi-Fi)** 網卡下的 **IPv4 位址** (例如 `192.168.1.175`)。
+在 Windows 的 **PowerShell** 中執行以下一列指令，即可直接輸出您的本機區網 IP 位址：
+```powershell
+# 在 PowerShell 中執行以獲取您的 Wi-Fi 區網 IP：
+(Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias "Wi-Fi").IPAddress
+```
+*(如果是使用有線有線網路，可將 `"Wi-Fi"` 換成 `"Ethernet"`，或直接在 `cmd` / `PowerShell` 中輸入 `ipconfig` 查詢)*
 
 ### 步驟 2：手機瀏覽器存取
 在您的手機瀏覽器中輸入：
-👉 **`http://<您的電腦區網IP>:8080`** (例如 `http://192.168.1.175:8080`)
+👉 **`http://<您的電腦區網IP>:8080`**
 
 ### 🛡️ 關鍵排障：Windows 防火牆阻擋解決辦法
 如果手機一直顯示「連線逾時」，這是因為 Windows 防火牆阻擋了 `8080` 連接埠。請在電腦上執行以下**一秒排除指令**：
